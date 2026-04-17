@@ -6,6 +6,7 @@
 #include "../include/search_prime.h"
 #include "../include/num_search.h"
 #include "../include/min.h"
+#include "../include/mandelbrot.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ int main(){
     cout << "5. Min\n";
     cout << "6. Num Search\n";
     cout << "7. Gray Scale\n";
+    cout << "8. Mandelbrot\n";
     cout << "Enter choice: ";
 
     cin >> choice;
@@ -29,6 +31,7 @@ int main(){
         case 5: run_min(); break;
         case 6: run_Search_Numbers(); break;
         case 7: run_grayscale(); break;
+        case 8: run_mandelbrot(); break;
         default: cout << "Invalid choice\n";
     }
 }
