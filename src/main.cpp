@@ -2,10 +2,11 @@
 #include "../include/matrix.h"
 #include "../include/monte_carlo.h"
 #include "../include/sum_array.h"
+#include "../include/grayscale.h"
 #include "../include/search_prime.h"
 #include "../include/num_search.h"
 #include "../include/min.h"
-#include "../include/grayscale.h"
+
 using namespace std;
 
 int main(){
@@ -15,8 +16,8 @@ int main(){
     cout << "3. Prime Search\n";
     cout << "4. Monte Carlo Pi\n";
     cout << "5. Min\n";
-    cout << "6. Num_Search\n";
-    cout << "7. Gray_Scale\n";
+    cout << "6. Num Search\n";
+    cout << "7. Gray Scale\n";
     cout << "Enter choice: ";
 
     cin >> choice;

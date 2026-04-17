@@ -1,4 +1,4 @@
-#ifdef GRAYSCALE_H
+#ifndef GRAYSCALE_H
 #define GRAYSCALE_H
 
 void run_grayscale();
