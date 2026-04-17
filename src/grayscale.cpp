@@ -22,7 +22,7 @@ void GrayscalingFunction(const vector<Pixel> &input, vector<unsigned char> &outp
     }
 }
 
-void run_gray_scale()
+void run_grayscale()
 {
     const int width = 1920;
     const int height = 1080;

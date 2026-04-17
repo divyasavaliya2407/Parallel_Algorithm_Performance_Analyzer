@@ -27,7 +27,7 @@ int main(){
         case 4: run_montecarlo(); break;
         case 5: run_min(); break;
         case 6: run_Search_Numbers(); break;
-        case 7: run_gray_scale(); break;
+        case 7: run_grayscale(); break;
         default: cout << "Invalid choice\n";
     }
 }
