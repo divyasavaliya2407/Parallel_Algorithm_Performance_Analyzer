@@ -4,22 +4,22 @@
 #include <chrono>
 #include <fstream>
 #include <cmath>
-
+#include <algorithm>
 
 using namespace std;
 using namespace std::chrono;
+
 struct Pixel {
     double r, g, b;
 };
 
-
-// Mandelbrot computation for one pixel
+// Mandelbrot computation
 int mandelbrot(double cr, double ci, int max_iter) {
     double zr = 0.0, zi = 0.0;
     int iter = 0;
 
-    while (zr*zr + zi*zi <= 4.0 && iter < max_iter) {
-        double temp = zr*zr - zi*zi + cr;
+    while (zr * zr + zi * zi <= 4.0 && iter < max_iter) {
+        double temp = zr * zr - zi * zi + cr;
         zi = 2.0 * zr * zi + ci;
         zr = temp;
         iter++;
@@ -28,53 +28,56 @@ int mandelbrot(double cr, double ci, int max_iter) {
     return iter;
 }
 
-
-// Render slice (used by threads)
-
+// Thread worker
 void renderSlice(int startY, int endY, int width, int height,
                  int max_iter, vector<Pixel>& framebuffer) {
 
     for (int y = startY; y < endY; ++y) {
         for (int x = 0; x < width; ++x) {
 
-            // Map pixel to complex plane (-2 to 1, -1.5 to 1.5)
+            int index = y * width + x;
+
+            // 🔒 SAFETY CHECK
+            if (index >= framebuffer.size()) {
+                cerr << "Out of bounds! index=" << index << "\n";
+                exit(1);
+            }
+
             double cr = (double)x / width * 3.0 - 2.0;
             double ci = (double)y / height * 3.0 - 1.5;
 
             int iter = mandelbrot(cr, ci, max_iter);
-
             double t = (double)iter / max_iter;
 
-            // Simple coloring
-            framebuffer[y * width + x] = {
-                t,
-                t * t,
-                sqrt(t)
-            };
+            framebuffer[index] = { t, t * t, sqrt(t) };
         }
     }
 }
 
-
 // Save image
-
 void savePPM(const string& filename,
              const vector<Pixel>& framebuffer,
              int width, int height) {
 
     ofstream file(filename);
+
+    if (!file) {
+        cerr << "Error opening file!\n";
+        return;
+    }
+
     file << "P3\n" << width << " " << height << "\n255\n";
 
     for (const auto& p : framebuffer) {
-        int r = p.r* 255;
-        int g = p.g* 255;
-        int b = p.b* 255;
+        int r = (int)(p.r * 255);
+        int g = (int)(p.g * 255);
+        int b = (int)(p.b * 255);
 
-        file << r << " " << g << " " << b << " ";
+        file << r << " " << g << " " << b << "\n";
     }
 }
 
-
+// Main runner
 void run_mandelbrot() {
     int width = 800;
     int height = 600;
@@ -84,36 +87,37 @@ void run_mandelbrot() {
 
     cout << "--- Mandelbrot Benchmark ---\n";
 
-   
     // SERIAL
-    
     auto startSerial = high_resolution_clock::now();
-
     renderSlice(0, height, width, height, max_iter, framebuffer);
-
     auto endSerial = high_resolution_clock::now();
 
     auto serialTime = duration_cast<milliseconds>(endSerial - startSerial);
-
     cout << "Serial Time: " << serialTime.count() << " ms\n";
 
-   
     // PARALLEL
-    
     int numThreads = thread::hardware_concurrency();
-    if (numThreads == 0) numThreads = 4;
+    if (numThreads <= 0) numThreads = 4;
+
+    numThreads = min(numThreads, height);  // 🔒 FIX
+
+    int rowsPerThread = (height + numThreads - 1) / numThreads;
 
     vector<thread> threads;
-
-    int rowsPerThread = height / numThreads;
 
     auto startParallel = high_resolution_clock::now();
 
     for (int i = 0; i < numThreads; ++i) {
         int startY = i * rowsPerThread;
-        int endY = (i == numThreads - 1) ? height : startY + rowsPerThread;
+        int endY = min(startY + rowsPerThread, height);
 
-        threads.emplace_back(renderSlice, startY, endY, width, height, max_iter, ref(framebuffer));
+        if (startY >= height) break;
+
+        threads.emplace_back(renderSlice,
+                             startY, endY,
+                             width, height,
+                             max_iter,
+                             ref(framebuffer));
     }
 
     for (auto& t : threads) {
@@ -125,21 +129,17 @@ void run_mandelbrot() {
     auto parallelTime = duration_cast<milliseconds>(endParallel - startParallel);
 
     cout << "Parallel Time (" << numThreads << " threads): "
-              << parallelTime.count() << " ms\n";
+         << parallelTime.count() << " ms\n";
 
-
-    // SPEEDUP
-  
-    double speedup = (double)serialTime.count() / parallelTime.count();
+    // SPEEDUP (safe)
+    double speedup = 0.0;
+    if (parallelTime.count() > 0)
+        speedup = (double)serialTime.count() / parallelTime.count();
 
     cout << "Speedup: " << speedup << "x\n";
 
-   
-    // SAVE OUTPUT
-
+    // SAVE
     savePPM("mandelbrot.ppm", framebuffer, width, height);
 
     cout << "Saved as mandelbrot.ppm\n";
-
-    
 }
