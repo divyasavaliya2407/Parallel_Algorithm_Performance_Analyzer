@@ -9,6 +9,7 @@
 #include "../include/mandelbrot.h"
 #include "../include/merge_sort.h"
 #include "../include/wordcount.h"
+#include "../include/bubblesort.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int main(){
     cout << "8. Mandelbrot\n";
     cout << "9. Merge Sort\n";
     cout << "10.Word_count\n";
+    cout << "11.Bubblesort\n";
     cout << "Enter choice: ";
 
     cin >> choice;
@@ -38,6 +40,7 @@ int main(){
         case 8: run_mandelbrot(); break;
         case 9: run_mergesort(); break;
         case 10:run_wordcount(); break;
+        case 11:run_bubblesort(); break;
         default: cout << "Invalid choice\n";
     }
 }
