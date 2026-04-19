@@ -8,6 +8,7 @@
 #include "../include/min.h"
 #include "../include/mandelbrot.h"
 #include "../include/merge_sort.h"
+#include "../include/wordcount.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ int main(){
     cout << "7. Gray Scale\n";
     cout << "8. Mandelbrot\n";
     cout << "9. Merge Sort\n";
+    cout << "10.Word_count\n";
     cout << "Enter choice: ";
 
     cin >> choice;
@@ -35,6 +37,7 @@ int main(){
         case 7: run_grayscale(); break;
         case 8: run_mandelbrot(); break;
         case 9: run_mergesort(); break;
+        case 10:run_wordcount(); break;
         default: cout << "Invalid choice\n";
     }
 }
