@@ -126,16 +126,16 @@ g++ -std=c++11 src/*.cpp -o build/app
 
 | Category                     | Algorithm / File   | Description                                       | Parallelization Strategy                     |
 | ---------------------------- | ------------------ | ------------------------------------------------- | -------------------------------------------- |
-| 🔢 Numerical / Search        | `min.cpp`          | Finds the minimum element in an array             | Parallel reduction (array split into chunks) |
-| 🔢 Numerical / Search        | `num_search.cpp`   | Searches for a target element in a dataset        | Parallel search across partitions            |
-| 🔢 Numerical / Search        | `search_prime.cpp` | Finds prime numbers in a given range              | Range splitting across threads               |
-| 🔢 Numerical / Search        | `sum_array.cpp`    | Computes sum of array elements                    | Parallel reduction                           |
-| 📊 Mathematical / Simulation | `monte_carlo.cpp`  | Estimates values (e.g., π) using random sampling  | Independent simulations per thread           |
-| 📊 Mathematical              | `matrix.cpp`       | Performs matrix operations (e.g., multiplication) | Row/column-wise parallel computation         |
-| 🧠 Sorting                   | `merge_sort.cpp`   | Sorts data using divide-and-conquer               | Parallel recursive splitting & merging       |
-| 🖼️ Image Processing         | `grayscale.cpp`    | Converts image from RGB to grayscale              | Pixel-level parallel processing              |
-| 🖼️ Image Processing         | `mandelbrot.cpp`   | Generates Mandelbrot fractal image                | Pixel-wise independent computation           |
-| 📝 Text Processing           | `wordcount.cpp`    | Counts words in a text                            | Chunk-based parallel text processing         |
+|  Numerical / Search        | `min.cpp`          | Finds the minimum element in an array             | Parallel reduction (array split into chunks) |
+|  Numerical / Search        | `num_search.cpp`   | Searches for a target element in a dataset        | Parallel search across partitions            |
+|  Numerical / Search        | `search_prime.cpp` | Finds prime numbers in a given range              | Range splitting across threads               |
+|  Numerical / Search        | `sum_array.cpp`    | Computes sum of array elements                    | Parallel reduction                           |
+|  Mathematical / Simulation | `monte_carlo.cpp`  | Estimates values (e.g., π) using random sampling  | Independent simulations per thread           |
+|  Mathematical              | `matrix.cpp`       | Performs matrix operations (e.g., multiplication) | Row/column-wise parallel computation         |
+|  Sorting                   | `merge_sort.cpp`   | Sorts data using divide-and-conquer               | Parallel recursive splitting & merging       |
+|  Image Processing         | `grayscale.cpp`    | Converts image from RGB to grayscale              | Pixel-level parallel processing              |
+|  Image Processing         | `mandelbrot.cpp`   | Generates Mandelbrot fractal image                | Pixel-wise independent computation           |
+|  Text Processing           | `wordcount.cpp`    | Counts words in a text                            | Chunk-based parallel text processing         |
 
 ---
 
