@@ -15,28 +15,23 @@ It serves as a practical demonstration of **parallel computing concepts** and pe
 
 # Features
 
-***Performance Analysis**
+**Performance Analysis**
 
   * Measures execution time of algorithms
 
-***Parallel Implementations**
+**Parallel Implementations**
 
   * Uses multithreading techniques for performance improvement
 
-***Multiple Algorithms Supported**
+**Multiple Algorithms Supported**
 
-  * Matrix operations
-  * Minimum value search
-  * Monte Carlo simulation
-  * Number search
-  * Prime number search
-  * Array summation
+  
 
-***Modular Code Structure**
+**Modular Code Structure**
 
   * Clean separation using `include/` and `src/`
 
-***Build Automation**
+**Build Automation**
 
   * Simple build script for compilation
 
@@ -59,25 +54,38 @@ It serves as a practical demonstration of **parallel computing concepts** and pe
 ```
 Parallel_Algorithm_Performance_Analyzer/
 │
-├── build/                 # Compiled binaries
-├── include/               # Header files
+├── files/
+│   └── large.txt                  
+│
+├── include/                       
+│   ├── grayscale.h
+│   ├── mandelbrot.h
 │   ├── matrix.h
+│   ├── merge_sort.h
 │   ├── min.h
 │   ├── monte_carlo.h
 │   ├── num_search.h
 │   ├── search_prime.h
-│   └── sum_array.h
+│   ├── sum_array.h
+│   └── wordcount.h
 │
-├── src/                   # Source files
+├── src/                           
 │   ├── main.cpp
+│   ├── grayscale.cpp
+│   ├── mandelbrot.cpp
 │   ├── matrix.cpp
+│   ├── merge_sort.cpp
 │   ├── min.cpp
 │   ├── monte_carlo.cpp
 │   ├── num_search.cpp
 │   ├── search_prime.cpp
-│   └── sum_array.cpp
+│   ├── sum_array.cpp
+│   └── wordcount.cpp
 │
-├── build.sh               # Build script
+├── build/                         
+│   └── app
+│
+├── build.sh                       
 ├── .gitignore
 └── README.md
 ```
@@ -150,7 +158,6 @@ g++ -std=c++11 src/*.cpp -o build/app
 
 # Future Improvements
 
-* Add OpenMP support
 * Add configurable thread count via CLI
 * Export results to CSV
 * Add benchmarking across varying input sizes
