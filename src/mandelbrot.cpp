@@ -10,12 +10,12 @@
 using namespace std;
 using namespace std::chrono;
 
-// 🔒 Renamed to prevent collisions with grayscale.cpp or other files
+
 struct MandelPixel {
     double r, g, b;
 };
 
-// 🔒 Renamed helper function
+
 int computeMandel(double cr, double ci, int max_iter) {
     double zr = 0.0, zi = 0.0;
     int iter = 0;
@@ -30,7 +30,7 @@ int computeMandel(double cr, double ci, int max_iter) {
     return iter;
 }
 
-// 🔒 Renamed helper function
+
 void renderMandelSlice(int startY, int endY, int width, int height,
                        int max_iter, vector<MandelPixel>& framebuffer) {
 
@@ -49,7 +49,7 @@ void renderMandelSlice(int startY, int endY, int width, int height,
     }
 }
 
-// 🔒 Renamed helper function
+
 void saveMandelPPM(const string& filename,
                    const vector<MandelPixel>& framebuffer,
                    int width, int height) {
@@ -70,7 +70,7 @@ void saveMandelPPM(const string& filename,
     }
 }
 
-// ✅ Main runner (Keep this name exactly as is so main.cpp can find it)
+
 void run_mandelbrot() {
     int width = 800;
     int height = 600;
@@ -80,7 +80,7 @@ void run_mandelbrot() {
 
     cout << "--- Mandelbrot Benchmark ---\n";
 
-    // SERIAL
+    
     auto startSerial = high_resolution_clock::now();
     renderMandelSlice(0, height, width, height, max_iter, framebuffer);
     auto endSerial = high_resolution_clock::now();
@@ -88,7 +88,7 @@ void run_mandelbrot() {
     auto serialTime = duration_cast<milliseconds>(endSerial - startSerial);
     cout << "Serial Time: " << serialTime.count() << " ms\n";
 
-    // PARALLEL
+    
     int numThreads = thread::hardware_concurrency();
     if (numThreads <= 0) numThreads = 4;
 
