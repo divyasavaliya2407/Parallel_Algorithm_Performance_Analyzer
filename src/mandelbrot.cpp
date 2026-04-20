@@ -10,12 +10,12 @@
 using namespace std;
 using namespace std::chrono;
 
-// 🔒 Renamed to prevent collisions with grayscale.cpp or other files
+
 struct MandelPixel {
     double r, g, b;
 };
 
-// 🔒 Renamed helper function
+
 int computeMandel(double cr, double ci, int max_iter) {
     double zr = 0.0, zi = 0.0;
     int iter = 0;
@@ -30,7 +30,7 @@ int computeMandel(double cr, double ci, int max_iter) {
     return iter;
 }
 
-// 🔒 Renamed helper function
+
 void renderMandelSlice(int startY, int endY, int width, int height,
                        int max_iter, vector<MandelPixel>& framebuffer) {
 
@@ -49,7 +49,7 @@ void renderMandelSlice(int startY, int endY, int width, int height,
     }
 }
 
-// 🔒 Renamed helper function
+
 void saveMandelPPM(const string& filename,
                    const vector<MandelPixel>& framebuffer,
                    int width, int height) {
