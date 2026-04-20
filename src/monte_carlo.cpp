@@ -9,9 +9,8 @@
 double time_serial;
 double time_parallel;
 
-// --- Worker Function ---
 long long monte_carlo_pi_worker(long long samples) {
-    // Thread-local random generator
+  
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> dis(0.0, 1.0);
@@ -28,7 +27,6 @@ long long monte_carlo_pi_worker(long long samples) {
     return inside_circle;
 }
 
-// --- Serial Execution ---
 void run_serial(long long total_samples) {
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -44,7 +42,6 @@ void run_serial(long long total_samples) {
     time_serial = elapsed.count();
 }
 
-// --- Parallel Execution ---
 void run_parallel(long long total_samples, unsigned int num_cores) {
     auto start_time = std::chrono::high_resolution_clock::now();
 
